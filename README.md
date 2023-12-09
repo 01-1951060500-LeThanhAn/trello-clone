@@ -1,8 +1,5 @@
 ##### Trello Clone
 
-<p align="center">
-##### Trello Clone
-</p>
 ## Live Demo:
 https://trello-clone-ta.vercel.app/
 ## Features:
