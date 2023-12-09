@@ -3,11 +3,11 @@
 import { createSafeAction } from "@/lib/safe-actions";
 import { InputType, ReturnType } from "./types";
 import { CreateComments } from "./schema";
-import { auth, useUser } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs";
 import { db } from "@/lib/db";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
-  const { userId, orgId, user } = auth();
+  const { userId, orgId } = auth();
 
   if (!userId || !orgId) {
     return {
