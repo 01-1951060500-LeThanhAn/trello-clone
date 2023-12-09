@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider     = "mongodb"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Board {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  orgId   String
+  title   String
+  imageId String
+
+  imageThumbUrl String?
+  imageFullUrl  String?
+  imageUsername String?
+  imageLinkHTML String?
+
+  lists     List[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model List {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  title   String?
+  order   Int
+  boardId String  @db.ObjectId
+  board   Board   @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  cards     Card[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([boardId])
+}
+
+model Card {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+
+  order       Int
+  description String?   @db.String
+  comments    Comment[]
+  listId      String    @db.ObjectId
+  list        List      @relation(fields: [listId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([listId])
+}
+
+model Comment {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  order    Int
+  content  String
+  imageUrl String
+
+  fullName  String
+  userId    String
+  cardId    String   @db.ObjectId
+  card      Card     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@index([cardId])
+}
+
+enum ACTION {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+enum ENTITY_TYPE {
+  BOARD
+  LIST
+  CARD
+}
+
+model AuditLog {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  orgId       String?
+  action      ACTION
+  entityId    String
+  entityType  ENTITY_TYPE
+  entityTitle String
+  userId      String
+  userImage   String      @db.String
+  userName    String      @db.String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model LimitOrg {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  orgId     String   @unique
+  count     Int      @default(10)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
