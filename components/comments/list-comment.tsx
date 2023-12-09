@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+import React from "react";
+import { useEffect } from "react";
 import getAllComments from "./get-comment";
 import CommentItem from "./comment-item";
 import { CommentProps } from "@/interface";

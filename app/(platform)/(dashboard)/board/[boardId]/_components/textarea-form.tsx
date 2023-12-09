@@ -46,7 +46,7 @@ export const FormTextArea = forwardRef<HTMLTextAreaElement, FormTextAreaProps>(
               id={id}
               name={id}
               disabled={disabled}
-              className={`resize-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:ring-0 shadow-sm outline-none`}
+              className={`${className}resize-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:ring-0 shadow-sm outline-none`}
             />
           </div>
           <FormErrors id={id as string} errors={errors} />

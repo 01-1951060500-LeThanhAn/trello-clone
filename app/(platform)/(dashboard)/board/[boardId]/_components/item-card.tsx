@@ -24,6 +24,7 @@ const CardItem: React.FC<CardItemProps> = ({ index, card }) => {
             {card.title.startsWith("https://") ? (
               <a
                 target="_blank"
+                rel="noreferrer"
                 className="underline whitespace-nowrap overflow-hidden text-ellipsis break-words text-sky-700"
                 href={card.title}
               >

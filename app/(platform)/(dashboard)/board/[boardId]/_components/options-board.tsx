@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/popover";
 import { useAction } from "@/hooks/use-actions";
 import { MoreHorizontal, X } from "lucide-react";
-import React, { useEffect } from "react";
+import React from "react";
 import { toast } from "sonner";
 interface OptionsBoardProp {
   id: string;

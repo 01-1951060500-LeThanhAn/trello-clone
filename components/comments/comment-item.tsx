@@ -26,7 +26,7 @@ const CommentItem: React.FC<ItemCommentProps> = ({
 
   const { disableEditing, isEditing } = useFunc();
   const { execute: exeDeleteComment } = useAction(deleteComment, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success(`Deleted ${item.content} success`);
       disableEditing();
       setComments(comments.filter((comment) => comment.id !== item.id));

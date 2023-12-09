@@ -19,7 +19,7 @@ interface ListBoardProps {
 const ListBoards: React.FC<ListBoardProps> = ({ boardId, data }) => {
   const [orderData, setOrderData] = useState(data);
   const { execute: executeUpdateOrder } = useAction(updateOrder, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success(`List dragged`);
     },
     onError: (err) => {
@@ -28,7 +28,7 @@ const ListBoards: React.FC<ListBoardProps> = ({ boardId, data }) => {
   });
 
   const { execute: executeCard } = useAction(updateOrderCard, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success(`Card updated`);
     },
     onError: (err) => {
@@ -65,7 +65,7 @@ const ListBoards: React.FC<ListBoardProps> = ({ boardId, data }) => {
     }
 
     if (type === "card") {
-      let newOrderData = [...orderData];
+      const newOrderData = [...orderData];
 
       const sourceList = newOrderData.find(
         (list) => list.id === source.droppableId

@@ -11,7 +11,7 @@ import { toast } from "sonner";
 
 const FormComment = ({
   cardId,
-  comments,
+
   setComments,
 }: {
   cardId: string | undefined;
@@ -47,7 +47,7 @@ const FormComment = ({
       content,
       cardId: cardId as string,
       imageUrl: user.imageUrl,
-      fullName: user?.fullName!,
+      fullName: user?.fullName ? user.fullName : "",
     });
   };
 

@@ -15,7 +15,7 @@ interface ActionProps {
 
 const Actions: React.FC<ActionProps> = ({ data }) => {
   const params = useParams();
-  const { onClose, onOpen } = useModelCard();
+  const { onClose } = useModelCard();
   const { execute: executeCopyCard, isLoading: isLoadingCopy } = useAction(
     copyCards,
     {

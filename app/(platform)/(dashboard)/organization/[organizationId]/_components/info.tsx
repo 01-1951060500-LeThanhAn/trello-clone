@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useModelCard } from "@/hooks/useModelCard";
 import { useOrganization } from "@clerk/nextjs";
 import { CreditCard } from "lucide-react";
 import Image from "next/image";
@@ -20,7 +19,7 @@ const Info = () => {
           <div className="w-[54px] h-[54px] relative">
             <Image
               className="rounded-md object-cover"
-              src={organization?.imageUrl!}
+              src={organization?.imageUrl ? organization?.imageUrl : ""}
               alt="Organization"
               fill
             />

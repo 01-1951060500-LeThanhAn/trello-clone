@@ -21,7 +21,7 @@ const Description: React.FC<DescriptionProps> = ({ data }) => {
   const queryClient = useQueryClient();
   const {
     isEditing,
-    setEditing,
+
     textAreaRef,
     formRef,
     enableTextAreaEditing,

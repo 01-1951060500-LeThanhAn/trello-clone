@@ -1,6 +1,5 @@
 "use client";
 import { deleteBoardList } from "@/actions/delete-listboard/main";
-import { copyBoardList } from "@/actions/list-copy/main";
 import { FormSubmits } from "@/components/forms/form-submit";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,10 +19,10 @@ interface OptionListProps {
   data: List;
   onAddCard: () => void;
 }
-const OptionList: React.FC<OptionListProps> = ({ onAddCard, data }) => {
+const OptionList: React.FC<OptionListProps> = ({ data }) => {
   const closeRef = useRef<ElementRef<"button">>(null);
   const { execute: deleteExcute } = useAction(deleteBoardList, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("Delete this list successfully");
       closeRef.current?.click();
     },

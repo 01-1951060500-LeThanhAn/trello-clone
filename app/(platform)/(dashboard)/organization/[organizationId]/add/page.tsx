@@ -1,9 +1,10 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useOrganization } from "@clerk/nextjs";
 import { Invitation } from "@clerk/nextjs/server";
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface InviteProps {
   invitations: Record<string, Invitation>;

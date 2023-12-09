@@ -43,11 +43,6 @@ const FormPicker: React.FC<FormPickerProps> = ({ id, errors }) => {
     fetchImages();
   }, []);
 
-  const handleSelectImage = (idImage: string | null) => {
-    if (pending) return;
-    setSelectImg(idImage);
-  };
-
   if (isLoading) {
     return (
       <div className="pp-6 flex items-center justify-center">
