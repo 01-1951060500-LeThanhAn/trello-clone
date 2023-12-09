@@ -6,7 +6,7 @@ import { useAction } from "@/hooks/use-actions";
 import { useUser } from "@clerk/nextjs";
 import { SendIcon } from "lucide-react";
 import Image from "next/image";
-import React, { useRef } from "react";
+import React from "react";
 import { toast } from "sonner";
 
 const FormComment = ({
@@ -23,9 +23,6 @@ const FormComment = ({
   if (!user) {
     return null;
   }
-
-  const formRef = useRef<HTMLFormElement | null>(null);
-  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const { execute: exeComment, fieldErrors } = useAction(createComments, {
     onSuccess: async () => {
@@ -66,9 +63,8 @@ const FormComment = ({
             height={40}
           />
         </div>
-        <form ref={formRef} action={onComment} className="relative w-full">
+        <form action={onComment} className="relative w-full">
           <FormInputs
-            ref={inputRef}
             id="content"
             placeholder="Write a comment..."
             className="h-10 "
