@@ -8,6 +8,7 @@ https://trello-clone-ta.vercel.app/
 - Copy board, card, list
 - Drag, drop
 - Update Profile ....
+- Comment card
 
 ## Technology
 - NextJS
