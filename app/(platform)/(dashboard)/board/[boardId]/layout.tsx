@@ -56,6 +56,7 @@ const BoardIdLayout = async ({
   if (!board) {
     notFound();
   }
+
   return (
     <>
       <div
@@ -64,7 +65,7 @@ const BoardIdLayout = async ({
           backgroundImage: `url(${board.imageFullUrl})`,
         }}
       >
-        <BoardNavbar board={board} />
+        <BoardNavbar board={board} orgId={orgId} />
         <div className="absolute inset-0 bg-black/10"></div>
         <main className="relative pt-16  px-6">{children}</main>
       </div>

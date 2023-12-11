@@ -1,6 +1,6 @@
 "use client";
 import { ListCards } from "@/types";
-import React, { ElementRef, useRef } from "react";
+import React, { ElementRef, useEffect, useRef } from "react";
 import ListHeader from "./header-board";
 import useFunc from "@/hooks/useFunc";
 import { CardForm } from "./card-form";

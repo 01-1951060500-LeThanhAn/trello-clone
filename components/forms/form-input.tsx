@@ -40,7 +40,7 @@ export const FormInputs = forwardRef<HTMLInputElement, FormInputProps>(
             ) : null}
             <Input
               onBlur={onBlur}
-              defaultValue={defaultVal}
+              defaultValue={defaultVal || null || undefined}
               ref={ref}
               className={`text-sm px-2 py-1 h-7 ${className}`}
               id={id}

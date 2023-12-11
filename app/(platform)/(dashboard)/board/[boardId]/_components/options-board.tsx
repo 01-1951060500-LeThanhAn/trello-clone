@@ -1,12 +1,12 @@
 "use client";
 
 import { deleteBoard } from "@/actions/delete-board/main";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+// import {
+//   Accordion,
+//   AccordionContent,
+//   AccordionItem,
+//   AccordionTrigger,
+// } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -54,15 +54,23 @@ const OptionsBoard: React.FC<OptionsBoardProp> = ({ id }) => {
               <X className="h-6 w-6" />
             </Button>
           </PopoverClose>
-          <Button
-            variant="ghost"
-            disabled={isLoading}
-            onClick={onDelete}
-            className="rounded-none mt-2 w-full h-auto p-2 px-5 justify-start font-normal text-sm"
-          >
-            Delete this board
-          </Button>
-          <Accordion type="multiple" className="space-y-2 px-3">
+          <div className="">
+            <Button
+              variant="ghost"
+              className="rounded-none mt-2 w-full h-auto p-2 px-5 justify-start font-normal text-sm"
+            >
+              About this board
+            </Button>
+            <Button
+              variant="ghost"
+              disabled={isLoading}
+              onClick={onDelete}
+              className="rounded-none mt-2 w-full h-auto p-2 px-5 justify-start font-normal text-sm"
+            >
+              Delete this board
+            </Button>
+          </div>
+          {/* <Accordion type="multiple" className="space-y-2 px-3">
             <AccordionItem value={id} className="outline-none">
               {" "}
               <AccordionTrigger
@@ -72,7 +80,7 @@ const OptionsBoard: React.FC<OptionsBoardProp> = ({ id }) => {
               </AccordionTrigger>
               <AccordionContent className="mt-3">Thanh An</AccordionContent>
             </AccordionItem>
-          </Accordion>
+          </Accordion> */}
         </PopoverContent>
       </Popover>
     </>

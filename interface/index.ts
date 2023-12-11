@@ -26,7 +26,7 @@ export interface FormInputProps {
   disabled?: boolean;
   errors?: Record<string, string[] | undefined>;
   className?: string;
-  defaultVal?: string;
+  defaultVal?: string | null;
   onBlur?: () => void;
 }
 
@@ -53,4 +53,11 @@ export interface CommentProps {
   userId: string;
   cardId: string;
   createdAt: string;
+}
+
+export interface HistoryBoard {
+  id: string;
+  title: string;
+  createdAt: any;
+  imageThumbUrl: string | null;
 }
