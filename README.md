@@ -1,4 +1,5 @@
-### Trello Clone
+##### Trello Clone
+
 ## Live Demo:
 https://trello-clone-ta.vercel.app/
 ## Features:
@@ -7,6 +8,7 @@ https://trello-clone-ta.vercel.app/
 - Copy board, card, list
 - Drag, drop
 - Update Profile ....
+- Comment card
 
 ## Technology
 - NextJS
@@ -16,7 +18,7 @@ https://trello-clone-ta.vercel.app/
 - TailwindCSS
 
 ## Preview
+ ![image](https://github.com/01-1951060500-LeThanhAn/clone-trello/assets/94341241/d66d364e-0a31-40d8-b19c-574fb3290c9f)
+![image](https://github.com/01-1951060500-LeThanhAn/clone-trello/assets/94341241/34172de8-3bcd-44f7-ae48-6e99f428ca04)
 
-![image](https://github.com/01-1951060500-LeThanhAn/trello-clone/assets/94341241/dea0ecb8-7d95-4bf3-b85e-70c86e62518d)
-![image](https://github.com/01-1951060500-LeThanhAn/trello-clone/assets/94341241/edc81234-40cc-4135-bb4e-7611dbe5bd54)
 
