@@ -57,6 +57,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         description: listCopy.description,
         order: newOrder,
         listId: listCopy.listId,
+        userId,
       },
     });
 
