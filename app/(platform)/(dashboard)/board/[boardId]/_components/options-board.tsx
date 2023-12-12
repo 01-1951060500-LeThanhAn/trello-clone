@@ -1,12 +1,7 @@
 "use client";
 
 import { deleteBoard } from "@/actions/delete-board/main";
-// import {
-//   Accordion,
-//   AccordionContent,
-//   AccordionItem,
-//   AccordionTrigger,
-// } from "@/components/ui/accordion";
+
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -15,14 +10,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useAction } from "@/hooks/use-actions";
+import { Board } from "@prisma/client";
 import { MoreHorizontal, X } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
 interface OptionsBoardProp {
   id: string;
+  data: Board;
 }
 
-const OptionsBoard: React.FC<OptionsBoardProp> = ({ id }) => {
+const OptionsBoard: React.FC<OptionsBoardProp> = ({ id, data }) => {
   const { execute, isLoading } = useAction(deleteBoard, {
     onError: (error) => {
       toast.error(error);
@@ -55,6 +52,9 @@ const OptionsBoard: React.FC<OptionsBoardProp> = ({ id }) => {
             </Button>
           </PopoverClose>
           <div className="">
+            <div className="rounded-none mt-2 w-full h-auto p-2 px-5 justify-start font-normal text-sm">
+              <p className="font-semibold">{data.title}</p>
+            </div>
             <Button
               variant="ghost"
               className="rounded-none mt-2 w-full h-auto p-2 px-5 justify-start font-normal text-sm"

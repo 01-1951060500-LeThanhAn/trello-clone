@@ -21,10 +21,25 @@ model Board {
   imageFullUrl  String?
   imageUsername String?
   imageLinkHTML String?
+  likes         Likes[]
+  lists         List[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
 
-  lists     List[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Likes {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  board         Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  boardId       String   @db.ObjectId
+  title         String
+  order         Int
+  imageThumbUrl String?
+  actions       Boolean
+  userId        String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
+
+  @@index([boardId])
 }
 
 model List {

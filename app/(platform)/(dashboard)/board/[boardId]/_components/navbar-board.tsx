@@ -1,6 +1,6 @@
 "use client";
 import { Board } from "@prisma/client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BoardTitleForm from "./title-board";
 import OptionsBoard from "./options-board";
 import { addBoardHistory } from "@/constant/history";
@@ -13,12 +13,51 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import SearchInput from "@/components/search-input/search-input";
+import { useUser } from "@clerk/nextjs";
+import { useAction } from "@/hooks/use-actions";
+import { addFavouriteBoard } from "@/actions/favourite/add-favourite/main";
+import { toast } from "sonner";
+import { NextPage } from "next";
 interface BoardNavProps {
   board: Board;
   orgId: string;
 }
 
-const BoardNavbar: React.FC<BoardNavProps> = ({ board, orgId }) => {
+const BoardNavbar: NextPage<BoardNavProps> = ({ board, orgId }) => {
+  const { user } = useUser();
+  if (!user) return null;
+  const [isFavorite, setIsFavorite] = useState(
+    localStorage.getItem(`favorite_${board.id}`) === "true"
+  );
+  const { execute: exeAddFavourite } = useAction(addFavouriteBoard, {
+    onSuccess: (data) => {
+      toast.success(`Added board ${data.title} success to list favourite`);
+      setIsFavorite(true);
+      localStorage.setItem(`favorite_${board.id}`, "true");
+    },
+    onError: (err) => {
+      toast.error(err);
+    },
+  });
+
+  const onAddBoardFavourite = () => {
+    if (isFavorite) {
+      setIsFavorite(false);
+      localStorage.removeItem(`favorite_${board.id}`);
+    } else {
+      exeAddFavourite({
+        title: board.title,
+        boardId: board.id,
+
+        imageThumbUrl: board.imageThumbUrl ? board.imageThumbUrl : "",
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log("Current favorite status:", isFavorite);
+  }, [isFavorite]);
+
   useEffect(() => {
     if (board.id && board.orgId === orgId) {
       addBoardHistory({
@@ -34,12 +73,18 @@ const BoardNavbar: React.FC<BoardNavProps> = ({ board, orgId }) => {
   return (
     <>
       <div className="w-full h-14 gap-x-4 px-6 text-white z-[40] bg-black/50 fixed top-14 flex items-center">
-        <BoardTitleForm data={board} />
+        <div className="hidden md:block">
+          <BoardTitleForm data={board} />
+        </div>
         <div className="flex items-center">
-          <StarIcon
-            role="button"
-            className=" mr-4 w-5 h-5 hover:bg-neutral-800 transition"
-          />
+          <div className="px-3 md:px-0" onClick={onAddBoardFavourite}>
+            <StarIcon
+              role="button"
+              className={`mr-4 w-5 h-5 ${
+                isFavorite ? "text-yellow-500" : ""
+              } hover:bg-neutral-800 transition`}
+            />
+          </div>
           <User
             role="button"
             className="w-5 h-5 hover:bg-neutral-800 transition"
@@ -62,7 +107,7 @@ const BoardNavbar: React.FC<BoardNavProps> = ({ board, orgId }) => {
               <SearchInput />
             </PopoverContent>
           </Popover>
-          <OptionsBoard id={board.id} />
+          <OptionsBoard data={board} id={board.id} />
         </div>
       </div>
     </>
