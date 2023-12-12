@@ -40,7 +40,7 @@ const ListItem: React.FC<ItemBoardProps> = ({ data, index }) => {
                     }`}
                   >
                     {data.cards.map((card: Card, index: number) => (
-                      <CardItem index={index} card={card} key={card.id} />
+                      <CardItem index={index} card={card} key={card?.id} />
                     ))}
                     {provided.placeholder}
                   </ol>

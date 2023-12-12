@@ -10,16 +10,18 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { useAction } from "@/hooks/use-actions";
-import { List } from "@prisma/client";
+import { ListCards } from "@/types";
+import { useUser } from "@clerk/nextjs";
 import { MoreHorizontal, X } from "lucide-react";
 import React, { ElementRef, useRef } from "react";
 import { toast } from "sonner";
 
 interface OptionListProps {
-  data: List;
+  data: ListCards;
   onAddCard: () => void;
 }
 const OptionList: React.FC<OptionListProps> = ({ data }) => {
+  const { user } = useUser();
   const closeRef = useRef<ElementRef<"button">>(null);
   const { execute: deleteExcute } = useAction(deleteBoardList, {
     onSuccess: () => {
@@ -68,23 +70,25 @@ const OptionList: React.FC<OptionListProps> = ({ data }) => {
             <input hidden name="boardId" id="boardId" value={data.boardId} />
             <FormSubmits
               variant="ghost"
-              className="rounded-sm w-full text-sm font-normal mt-4 h-auto px-5 p-2 justify-start"
+              className="rounded-sm w-full text-sm font-normal mt-1 h-auto px-5 p-2 justify-start"
             >
               Copy list...
             </FormSubmits>
           </form>
 
           <Separator className="mt-2" />
-          <form action={onSubmit}>
-            <input hidden name="id" id="id" value={data.id} />
-            <input hidden name="boardId" id="boardId" value={data.boardId} />
-            <FormSubmits
-              variant="ghost"
-              className="rounded-sm w-full text-sm font-normal h-auto px-5 p-2 justify-start"
-            >
-              Delete this list
-            </FormSubmits>
-          </form>
+          {data.cards?.length > 0 && data.cards[0].userId === user?.id && (
+            <form action={onSubmit}>
+              <input hidden name="id" id="id" value={data.id} />
+              <input hidden name="boardId" id="boardId" value={data.boardId} />
+              <FormSubmits
+                variant="ghost"
+                className="rounded-sm w-full text-sm font-normal h-auto px-5 p-2 justify-start"
+              >
+                Delete this list
+              </FormSubmits>
+            </form>
+          )}
         </PopoverContent>
       </Popover>
     </>

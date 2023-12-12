@@ -29,7 +29,7 @@ const Info = () => {
             <p className=" text-xl font-semibold">{organization?.name}</p>
             <div className="flex items-center text-xs text-muted-foreground">
               <CreditCard />
-              Free
+              <span className="ml-2">Free</span>
             </div>
           </div>
         </div>

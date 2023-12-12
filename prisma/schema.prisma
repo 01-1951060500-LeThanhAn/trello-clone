@@ -57,9 +57,9 @@ model List {
 }
 
 model Card {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  userId      String
   order       Int
   description String?   @db.String
   comments    Comment[]

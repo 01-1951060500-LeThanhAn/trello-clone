@@ -37,7 +37,7 @@ const BoardPage: React.FC<BoardPageIdProps> = async ({ params }) => {
 
   return (
     <>
-      <div className="mt-14 p-2  h-full overflow-x-auto">
+      <div className="mt-14  h-full overflow-x-auto">
         <ListBoards boardId={params?.boardId} data={lists} />
       </div>
     </>

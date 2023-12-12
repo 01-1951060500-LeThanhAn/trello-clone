@@ -53,6 +53,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 
     card = await db.card.create({
       data: {
+        userId: userId,
         title,
         listId,
         order: newOrder,

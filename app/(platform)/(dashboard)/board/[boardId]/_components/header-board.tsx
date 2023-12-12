@@ -9,11 +9,12 @@ import React, { useState } from "react";
 import { toast } from "sonner";
 import { useEventListener } from "usehooks-ts";
 import OptionList from "./option-list";
+import { ListCards } from "@/types";
 const ListHeader = ({
   data,
   onAddCard,
 }: {
-  data: List;
+  data: ListCards;
   onAddCard: () => void;
 }) => {
   const [title, setTitle] = useState(data.title);
