@@ -52,7 +52,7 @@ const Navbar: NextPage<FavouriteBoardProps> = ({ favouriteBoard }) => {
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="primary" className="md:flex items-center hidden">
-              <p className="mr-3">WorkSpaces</p>
+              <p className="">WorkSpaces</p>
             </Button>
           </PopoverTrigger>
 
@@ -63,7 +63,7 @@ const Navbar: NextPage<FavouriteBoardProps> = ({ favouriteBoard }) => {
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="primary" className="md:flex items-center hidden">
-              <p className="mr-3"> Marked as favourite</p>
+              <p className=""> Marked as favourite</p>
             </Button>
           </PopoverTrigger>
 
