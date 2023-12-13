@@ -79,13 +79,19 @@ const MobileSidebar: NextPage<FavouriteBoardPropsMobile> = ({
                 align="start"
               >
                 <div className="">
-                  {favouriteBoard.map((item: Likes) => (
-                    <FavouriteBoard
-                      favouriteBoard={favouriteBoard}
-                      key={item.id}
-                      item={item}
-                    />
-                  ))}
+                  {favouriteBoard.length === 0 ? (
+                    <>
+                      <div className="">No favourite board here !</div>
+                    </>
+                  ) : (
+                    favouriteBoard.map((item: Likes) => (
+                      <FavouriteBoard
+                        favouriteBoard={favouriteBoard}
+                        key={item.id}
+                        item={item}
+                      />
+                    ))
+                  )}
                 </div>
               </PopoverContent>
             </Popover>
