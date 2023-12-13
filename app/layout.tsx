@@ -4,7 +4,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
 import NextTopLoader from "nextjs-toploader";
-
+import "react-loading-skeleton/dist/skeleton.css";
+import { SkeletonTheme } from "react-loading-skeleton";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -22,10 +23,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <NextTopLoader />
-        {children}
-      </body>
+      <SkeletonTheme
+        baseColor="rgb(234, 214, 214)"
+        highlightColor="rgba(146, 138, 138, 0.2)"
+      >
+        <body className={inter.className}>
+          <NextTopLoader />
+          {children}
+        </body>
+      </SkeletonTheme>
     </html>
   );
 }

@@ -14,6 +14,7 @@ import { AuditLog } from "@prisma/client";
 import Activity from "./activity";
 import FormComment from "./comment";
 import CommentList from "@/components/comments/list-comment";
+import Skeleton from "react-loading-skeleton";
 
 const CardModal = () => {
   const { isOpen, onClose, id } = useModelCard();
@@ -33,7 +34,10 @@ const CardModal = () => {
       <Dialog onOpenChange={onClose} open={isOpen}>
         <DialogContent className="max-h-[80vh] overflow-y-auto">
           {!cardData ? (
-            <div>Loading...</div>
+            <div className="w-1/3 rounded-lg">
+              {" "}
+              <Skeleton className="h-12" />
+            </div>
           ) : (
             <Header data={cardData as CardLists} />
           )}
@@ -41,19 +45,35 @@ const CardModal = () => {
             <div className="col-span-3">
               <div className="w-full space-y-6">
                 {!cardData ? (
-                  <p>Loading...</p>
+                  <Skeleton className="w-full h-20" />
                 ) : (
                   <Description data={cardData}></Description>
                 )}
                 {!auditLogData ? (
-                  <p>Loading...</p>
+                  <>
+                    <div className="flex">
+                      <div className="w-12">
+                        <Skeleton className=" h-12 rounded-full" />
+                      </div>
+                      <div className="w-full  ml-3">
+                        <Skeleton className=" h-12 " />
+                      </div>
+                    </div>
+                  </>
                 ) : (
                   <Activity data={auditLogData as AuditLog[]}></Activity>
                 )}
               </div>
             </div>
             {!cardData ? (
-              <p>Loading...</p>
+              <div className="flex ml-2">
+                <div className="w-12">
+                  <Skeleton className=" h-12 rounded-full" />
+                </div>
+                <div className="w-12  ml-3">
+                  <Skeleton className=" h-12 " />
+                </div>
+              </div>
             ) : (
               <Actions data={cardData as CardLists} />
             )}
