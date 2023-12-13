@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useAction } from "@/hooks/use-actions";
 import { useModelCard } from "@/hooks/useModelCard";
 import { CardLists } from "@/types";
+import { useUser } from "@clerk/nextjs";
 import { Copy, Trash } from "lucide-react";
 import { useParams } from "next/navigation";
 import React from "react";
@@ -14,6 +15,8 @@ interface ActionProps {
 }
 
 const Actions: React.FC<ActionProps> = ({ data }) => {
+  const { user } = useUser();
+  console.log(data);
   const params = useParams();
   const { onClose } = useModelCard();
   const { execute: executeCopyCard, isLoading: isLoadingCopy } = useAction(
@@ -73,14 +76,16 @@ const Actions: React.FC<ActionProps> = ({ data }) => {
         >
           <Copy className="w-4 h-4" size="sm" />
         </Button>
-        <Button
-          disabled={isLoadingDelete}
-          onClick={onDelete}
-          className="md:mt-2 ml-2"
-          variant={"destructive"}
-        >
-          <Trash className="w-4 h-4" size="sm" />
-        </Button>
+        {data.userId === user?.id && (
+          <Button
+            disabled={isLoadingDelete}
+            onClick={onDelete}
+            className="md:mt-2 ml-2"
+            variant={"destructive"}
+          >
+            <Trash className="w-4 h-4" size="sm" />
+          </Button>
+        )}
       </div>
     </>
   );
