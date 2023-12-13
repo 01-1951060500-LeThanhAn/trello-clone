@@ -11,6 +11,7 @@ https://trello-clone-ta.vercel.app/
 - Comment card
 - Search card
 - Add favourite board
+- Invite members 
 
 ## Technology
 - NextJS
