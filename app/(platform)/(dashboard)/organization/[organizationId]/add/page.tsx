@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useOrganization } from "@clerk/nextjs";
 import { Invitation } from "@clerk/nextjs/server";
 import React, { useState } from "react";
+import { toast } from "sonner";
 
 interface InviteProps {
   invitations: Record<string, Invitation>;
@@ -21,12 +22,13 @@ function InviteMember() {
     try {
       setDisabled(true);
       await organization?.inviteMember({ emailAddress, role });
-      console.log("Invite success");
+      toast.success(`Invitation was successfully sent to "${emailAddress}"`);
       setEmailAddress("");
       setRole("basic_member");
       setDisabled(false);
     } catch (error) {
       console.log(error);
+      toast.error(`Invitation was failed sent to "${emailAddress}"`);
     }
   };
 
@@ -83,19 +85,30 @@ export default function InvitationList() {
   }
 
   const revoke = async (inv: Invitation) => {
-    await inv.revoked?.valueOf();
+    try {
+      await inv.revoked?.valueOf();
+      toast.success(`Invitation successfully revoked`);
+    } catch (error) {
+      toast.error(`Invitation failed revoked`);
+    }
   };
 
   return (
     <div>
       <InviteMember />
-      <div>
+      <div className="mt-4">
         {invitations.data &&
           invitations.data.map((invitation: any) => (
-            <li key={invitation.id}>
-              <p>{invitation.emailAddress} </p>
-              <button onClick={() => revoke(invitation)}>Revoke</button>
-            </li>
+            <div className="flex items-center my-3" key={invitation.id}>
+              <p className="min-w-[250px]">{invitation.emailAddress} </p>
+              <Button
+                className="ml-3"
+                variant="destructive"
+                onClick={() => revoke(invitation)}
+              >
+                Revoke
+              </Button>
+            </div>
           ))}
       </div>
     </div>
