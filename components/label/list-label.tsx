@@ -56,7 +56,7 @@ const ListLabel = ({ cardId }: { cardId: string }) => {
         ) : (
           <>
             {labels.length === 0 ? (
-              <Button variant="default" className="mb-3 -mt-5">
+              <Button variant="default" className="mb-3 ">
                 Stick the sticker
                 <Plus className="w-4 h-4 ml-3" />
               </Button>
