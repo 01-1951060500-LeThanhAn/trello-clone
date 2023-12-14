@@ -1,8 +1,13 @@
 "use client";
 import { copyCards } from "@/actions/card-copy/main";
 import { deleteCards } from "@/actions/delete-card/main";
+import FormLabel from "@/components/forms/form-label";
 import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { useAction } from "@/hooks/use-actions";
 import { useModelCard } from "@/hooks/useModelCard";
 import { CardLists } from "@/types";
@@ -88,7 +93,7 @@ const Actions: React.FC<ActionProps> = ({ data }) => {
             </PopoverTrigger>
 
             <PopoverContent>
-              Label
+              <FormLabel cardId={data.id} />
             </PopoverContent>
           </Popover>
           <Button className="md:mt-2" variant={"primary"}>

@@ -15,6 +15,7 @@ import Activity from "./activity";
 import FormComment from "./comment";
 import CommentList from "@/components/comments/list-comment";
 import Skeleton from "react-loading-skeleton";
+import ListLabel from "@/components/label/list-label";
 
 const CardModal = () => {
   const { isOpen, onClose, id } = useModelCard();
@@ -41,6 +42,10 @@ const CardModal = () => {
           ) : (
             <Header data={cardData as CardLists} />
           )}
+
+          <div className="w-full">
+            <ListLabel cardId={cardData?.id as string} />
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-4 mg:gap-4">
             <div className="col-span-3">
               <div className="w-full space-y-6">
@@ -66,11 +71,11 @@ const CardModal = () => {
               </div>
             </div>
             {!cardData ? (
-              <div className="grid grid-cols-2  md:flex md:flex-col gap-x-3 gap-y-2">
+              <div className="grid grid-cols-2 mt-3 md:mt-0 md:flex md:flex-col gap-x-3 gap-y-2">
                 <div className="w-full md:ml-3 ml-0">
                   <Skeleton className=" h-12 rounded-full" />
                 </div>
-                <div className="w-full  ml-3">
+                <div className="w-full  md:ml-3 ml-0">
                   <Skeleton className=" h-12 " />
                 </div>
                 <div className="w-full md:ml-3 ml-0">

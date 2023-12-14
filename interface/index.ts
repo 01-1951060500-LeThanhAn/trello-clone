@@ -61,3 +61,8 @@ export interface HistoryBoard {
   createdAt: any;
   imageThumbUrl: string | null;
 }
+
+export interface ColorProps {
+  id: number;
+  color: string;
+}
