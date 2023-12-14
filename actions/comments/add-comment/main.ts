@@ -5,6 +5,8 @@ import { InputType, ReturnType } from "./types";
 import { CreateComments } from "./schema";
 import { auth } from "@clerk/nextjs";
 import { db } from "@/lib/db";
+import { createAuditLog } from "@/lib/auditLog";
+import { ACTION, ENTITY_TYPE } from "@prisma/client";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -54,6 +56,13 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         imageUrl: imageUrl,
         fullName: fullName,
       },
+    });
+
+    await createAuditLog({
+      entityId: card.id,
+      entityTitle: comments.content,
+      entityType: ENTITY_TYPE.CARD,
+      action: ACTION.COMMENT,
     });
   } catch (error: any) {
     console.log(error?.message);

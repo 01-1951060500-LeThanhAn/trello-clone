@@ -8,6 +8,7 @@ import { createLabel } from "@/actions/label/create-label/main";
 import { toast } from "sonner";
 import useFunc from "@/hooks/useFunc";
 import { useEventListener, useOnClickOutside } from "usehooks-ts";
+import FormErrors from "./form-error";
 
 const FormLabel = ({ cardId }: { cardId: string }) => {
   const { disableEditing, onKeydown, formRef, inputRef } = useFunc();
@@ -49,6 +50,7 @@ const FormLabel = ({ cardId }: { cardId: string }) => {
           </div>
           <FormSubmits className="w-full">Create label</FormSubmits>
         </form>
+        <FormErrors id="name" errors={fieldErrors} />
       </div>
     </>
   );

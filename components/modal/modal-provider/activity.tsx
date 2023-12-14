@@ -15,11 +15,11 @@ const Activity: React.FC<AuditProps> = ({ data }) => {
         <ActivityIcon className="mt-1 text-neutral-700" />
         <div className="w-full">
           <p className="font-semibold text-neutral-700">Activity</p>
-          <ol className="mt-2 space-y-4">
+          <div className="mt-2 space-y-4 max-h-[100px] overflow-y-auto">
             {data.map((item) => (
               <ActivityItem data={item} key={item.id} />
             ))}
-          </ol>
+          </div>
         </div>
       </div>
     </>

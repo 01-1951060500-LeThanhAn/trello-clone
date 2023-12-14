@@ -1,11 +1,11 @@
 "use client";
 import { useModelCard } from "@/hooks/useModelCard";
+import { LabelList } from "@/types";
 import { Draggable } from "@hello-pangea/dnd";
-import { Card } from "@prisma/client";
 import React from "react";
 interface CardItemProps {
   index: number;
-  card: Card;
+  card: LabelList;
 }
 const CardItem: React.FC<CardItemProps> = ({ index, card }) => {
   const cardModal = useModelCard();

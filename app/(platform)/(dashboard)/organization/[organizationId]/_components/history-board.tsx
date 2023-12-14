@@ -44,10 +44,10 @@ const HistoryBoard = () => {
 
         <Button
           onClick={handleDeleteBoard}
-          className="group text-black bg-slate-100 z-10 relative aspect-video bg-no-repeat bg-center bg-cover  rounded-md h-full w-full p-2 overflow-hidden"
+          className="rounded-sm py-3 relative h-full w-auto bg-muted transition flex items-center justify-center hover:opacity-75 break-all"
           variant="ghost"
         >
-          Delete All Board Watched
+          Delete Board Watched
         </Button>
       </div>
     </>

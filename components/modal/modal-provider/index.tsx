@@ -66,7 +66,9 @@ const CardModal = () => {
                     </div>
                   </>
                 ) : (
-                  <Activity data={auditLogData as AuditLog[]}></Activity>
+                  <div className="">
+                    <Activity data={auditLogData as AuditLog[]}></Activity>
+                  </div>
                 )}
               </div>
             </div>

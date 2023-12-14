@@ -1,11 +1,10 @@
 "use client";
-import { ListCards } from "@/types";
-import React, { ElementRef, useEffect, useRef } from "react";
+import { LabelList, ListCards } from "@/types";
+import React, { ElementRef, useRef } from "react";
 import ListHeader from "./header-board";
 import useFunc from "@/hooks/useFunc";
 import { CardForm } from "./card-form";
 import CardItem from "./item-card";
-import { Card } from "@prisma/client";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 interface ItemBoardProps {
   data: ListCards;
@@ -39,13 +38,18 @@ const ListItem: React.FC<ItemBoardProps> = ({ data, index }) => {
                       data.cards?.length > 0 ? "mt-2" : "mt-0"
                     }`}
                   >
-                    {data.cards.map((card: Card, index: number) => (
-                      <CardItem index={index} card={card} key={card?.id} />
+                    {data.cards.map((card, index: number) => (
+                      <CardItem
+                        index={index}
+                        card={card as LabelList}
+                        key={card?.id}
+                      />
                     ))}
                     {provided.placeholder}
                   </ol>
                 )}
               </Droppable>
+
               <CardForm
                 disableEditing={disableEditing}
                 enableTextAreaEditing={enableTextAreaEditing}
