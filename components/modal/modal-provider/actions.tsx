@@ -2,11 +2,12 @@
 import { copyCards } from "@/actions/card-copy/main";
 import { deleteCards } from "@/actions/delete-card/main";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useAction } from "@/hooks/use-actions";
 import { useModelCard } from "@/hooks/useModelCard";
 import { CardLists } from "@/types";
 import { useUser } from "@clerk/nextjs";
-import { Copy, Trash } from "lucide-react";
+import { Copy, EyeIcon, Trash, User2Icon } from "lucide-react";
 import { useParams } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
@@ -65,27 +66,48 @@ const Actions: React.FC<ActionProps> = ({ data }) => {
 
   return (
     <>
-      <div className="mt-2 space-y-2 ml-0 md:ml-2">
+      <div className="mt-2 md:mt-0 space-y-2 ml-0 md:ml-2">
         <p className="text-base font-semibold">Actions</p>
 
-        <Button
-          disabled={isLoadingCopy}
-          onClick={onCopy}
-          className="md:mt-2"
-          variant={"primary"}
-        >
-          <Copy className="w-4 h-4" size="sm" />
-        </Button>
-        {data.userId === user?.id && (
+        <div className=" grid grid-cols-2  md:flex md:flex-col gap-x-3 gap-y-2">
           <Button
-            disabled={isLoadingDelete}
-            onClick={onDelete}
-            className="md:mt-2 ml-2"
-            variant={"destructive"}
+            disabled={isLoadingCopy}
+            onClick={onCopy}
+            className="md:mt-2"
+            variant={"primary"}
           >
-            <Trash className="w-4 h-4" size="sm" />
+            <Copy className="w-4 h-4" size="sm" />
+            <p className="ml-2">Copy</p>
           </Button>
-        )}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button className="md:mt-2" variant={"primary"}>
+                <EyeIcon className="w-4 h-4" size="sm" />
+                <p className="ml-2">Stick Label</p>
+              </Button>
+            </PopoverTrigger>
+
+            <PopoverContent>
+              Label
+            </PopoverContent>
+          </Popover>
+          <Button className="md:mt-2" variant={"primary"}>
+            <User2Icon className="w-4 h-4" size="sm" />
+            <p className="ml-2">Members</p>
+          </Button>
+
+          {data.userId === user?.id && (
+            <Button
+              disabled={isLoadingDelete}
+              onClick={onDelete}
+              className="md:mt-2 "
+              variant={"destructive"}
+            >
+              <Trash className="w-4 h-4" size="sm" />
+              <p className="ml-2">Delete</p>
+            </Button>
+          )}
+        </div>
       </div>
     </>
   );

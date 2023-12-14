@@ -12,7 +12,6 @@ interface InviteProps {
 }
 function InviteMember() {
   const { organization } = useOrganization();
-
   const [emailAddress, setEmailAddress] = useState("");
   const [role, setRole] = useState<"basic_member" | "admin">("basic_member");
   const [disabled, setDisabled] = useState(false);
@@ -33,47 +32,49 @@ function InviteMember() {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <Input
-        type="text"
-        placeholder="Email address"
-        className="w-full"
-        value={emailAddress}
-        onChange={(e) => setEmailAddress(e.target.value)}
-      />
-      <label>
-        <input
-          className="mt-5"
-          type="radio"
-          checked={role === "admin"}
-          onChange={() => {
-            setRole("admin");
-          }}
+    <>
+      <form onSubmit={onSubmit}>
+        <Input
+          type="text"
+          placeholder="Email address"
+          className="w-full"
+          value={emailAddress}
+          onChange={(e) => setEmailAddress(e.target.value)}
+        />
+        <label>
+          <input
+            className="mt-5"
+            type="radio"
+            checked={role === "admin"}
+            onChange={() => {
+              setRole("admin");
+            }}
+            disabled={disabled}
+          />{" "}
+          Admin
+        </label>
+        <label>
+          <input
+            className="mt-5 ml-3"
+            type="radio"
+            checked={role === "basic_member"}
+            onChange={() => {
+              setRole("basic_member");
+            }}
+            disabled={disabled}
+          />{" "}
+          Member
+        </label>{" "}
+        <Button
+          variant="primary"
+          className="ml-4"
+          type="submit"
           disabled={disabled}
-        />{" "}
-        Admin
-      </label>
-      <label>
-        <input
-          className="mt-5 ml-3"
-          type="radio"
-          checked={role === "basic_member"}
-          onChange={() => {
-            setRole("basic_member");
-          }}
-          disabled={disabled}
-        />{" "}
-        Member
-      </label>{" "}
-      <Button
-        variant="primary"
-        className="ml-4"
-        type="submit"
-        disabled={disabled}
-      >
-        Invite
-      </Button>
-    </form>
+        >
+          Invite
+        </Button>
+      </form>
+    </>
   );
 }
 

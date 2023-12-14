@@ -61,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
             />
           </form>
 
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm mt-2 text-muted-foreground">
             In list <span className="underline">{data.title}</span>
           </p>
         </div>

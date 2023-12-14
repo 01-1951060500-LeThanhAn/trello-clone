@@ -67,8 +67,22 @@ model Card {
   list        List      @relation(fields: [listId], references: [id], onDelete: Cascade)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  labels      Label[]
 
   @@index([listId])
+}
+
+model Label {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  userId    String
+  color     String
+  card      Card     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  cardId    String   @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([cardId])
 }
 
 model Comment {

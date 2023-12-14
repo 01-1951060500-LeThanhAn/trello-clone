@@ -32,7 +32,7 @@ const CardModal = () => {
   return (
     <>
       <Dialog onOpenChange={onClose} open={isOpen}>
-        <DialogContent className="max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-h-[80vh] min-w-[50%] overflow-y-auto">
           {!cardData ? (
             <div className="w-1/3 rounded-lg">
               {" "}
@@ -66,11 +66,14 @@ const CardModal = () => {
               </div>
             </div>
             {!cardData ? (
-              <div className="flex ml-2">
-                <div className="w-12">
+              <div className="grid grid-cols-2  md:flex md:flex-col gap-x-3 gap-y-2">
+                <div className="w-full md:ml-3 ml-0">
                   <Skeleton className=" h-12 rounded-full" />
                 </div>
-                <div className="w-12  ml-3">
+                <div className="w-full  ml-3">
+                  <Skeleton className=" h-12 " />
+                </div>
+                <div className="w-full md:ml-3 ml-0">
                   <Skeleton className=" h-12 " />
                 </div>
               </div>
