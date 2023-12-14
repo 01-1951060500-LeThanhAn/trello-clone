@@ -10,8 +10,8 @@ const ActivityItem: React.FC<ActivityItemProps> = ({ data }) => {
   return (
     <>
       <li className="flex items-center gap-x-2">
-        <Avatar className="h-8 w-8">
-          <AvatarImage src={data.userImage} alt="" />
+        <Avatar className="h-8 w-8 ">
+          <AvatarImage className="object-cover" src={data.userImage} alt="" />
         </Avatar>
         <div className="flex flex-col space-y-0.5">
           <p className="text-sm text-muted-foreground">
