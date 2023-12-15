@@ -5,7 +5,7 @@ import { InputType, ReturnType } from "./types";
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { createSafeAction } from "@/lib/safe-actions";
-import { CreateCard } from "./schema";
+import { CreateCardNotImage } from "./schema";
 import { createAuditLog } from "@/lib/auditLog";
 import { ACTION, ENTITY_TYPE } from "@prisma/client";
 
@@ -18,7 +18,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     };
   }
 
-  const { title, image = "add title with image", boardId, listId } = data;
+  const { title, boardId, listId } = data;
   let card;
 
   try {
@@ -55,10 +55,9 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       data: {
         userId: userId,
         title,
-        image,
+
         listId,
         order: newOrder,
-        type: image ? "add title with image" : "add title not image",
       },
     });
 
@@ -81,4 +80,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   };
 };
 
-export const createCards = createSafeAction(CreateCard, handler);
+export const createCardsNotImage = createSafeAction(
+  CreateCardNotImage,
+  handler
+);

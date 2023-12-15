@@ -26,7 +26,7 @@ const ListItem: React.FC<ItemBoardProps> = ({ data, index }) => {
           >
             <div
               {...provided.dragHandleProps}
-              className="w-full rounded-md bg-[#f1f2f4] shadow-md px-2 py-2"
+              className="w-72  rounded-md  bg-[#f1f2f4] shadow-md px-2 py-2"
             >
               <ListHeader onAddCard={enableTextAreaEditing} data={data} />
               <Droppable droppableId={data.id} type="card">

@@ -59,8 +59,10 @@ model List {
 model Card {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   title       String
+  type        String?
   userId      String
   order       Int
+  image       String?   @db.String
   description String?   @db.String
   comments    Comment[]
   listId      String    @db.ObjectId

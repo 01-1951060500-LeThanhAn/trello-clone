@@ -18,8 +18,18 @@ const nextConfig = {
         protocol: "https",
         hostname: "img.freepik.com",
       },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "/*",
+      },
     ],
+
+    minimumCacheTTL: 150000,
   },
+  reactStrictMode: true,
+  optimizeFonts: true,
 };
 
 module.exports = nextConfig;

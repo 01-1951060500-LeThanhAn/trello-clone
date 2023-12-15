@@ -7,6 +7,7 @@ import useFunc from "@/hooks/useFunc";
 import { CardLists } from "@/types";
 import { useQueryClient } from "@tanstack/react-query";
 import { Layout } from "lucide-react";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -48,6 +49,18 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
   }, [data?.title]);
   return (
     <>
+      {data.image && (
+        <div className="">
+          <Image
+            className="w-full bg-transparent h-32 object-cover "
+            unoptimized
+            src={data?.image!}
+            alt=""
+            width={100}
+            height={40}
+          />
+        </div>
+      )}
       <div className="flex items-start gap-x-3 mb-6 w-full">
         <Layout className="h-5 w-5 mt-1 text-neutral-700" />
         <div className="w-full">

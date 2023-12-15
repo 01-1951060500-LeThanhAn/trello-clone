@@ -7,12 +7,15 @@ import { useAction } from "@/hooks/use-actions";
 import { deleteLabel } from "@/actions/label/delete-label/main";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
+import { useUser } from "@clerk/nextjs";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import FormLabel from "../forms/form-label";
 
 const ListLabel = ({ cardId }: { cardId: string }) => {
   const [labels, setLabels] = useState<Label[]>([]);
   const [loading, setLoading] = useState(false);
-  const closeRefs = useRef<(HTMLDivElement | null)[]>([]); // Mảng các ref
-
+  const closeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const { user } = useUser();
   const { execute: exeDeleteLabel } = useAction(deleteLabel, {
     onSuccess: (data) => {
       toast.success(`Deleted label "${data?.name}" from card`);
@@ -48,6 +51,7 @@ const ListLabel = ({ cardId }: { cardId: string }) => {
       console.log(error);
     }
   };
+
   return (
     <>
       <div className="flex items-center gap-x-2 flex-1 flex-wrap">
@@ -55,11 +59,19 @@ const ListLabel = ({ cardId }: { cardId: string }) => {
           <Loader2 className="w-8 h-8  mx-auto animate-spin" />
         ) : (
           <>
-            {labels.length === 0 ? (
-              <Button variant="default" className="mb-3 ">
-                Stick the sticker
-                <Plus className="w-4 h-4 ml-3" />
-              </Button>
+            {labels && labels.length === 0 ? (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="default" className="mb-3 ">
+                    Stick the sticker
+                    <Plus className="w-4 h-4 ml-3" />
+                  </Button>
+                </PopoverTrigger>
+
+                <PopoverContent>
+                  <FormLabel cardId={cardId} />
+                </PopoverContent>
+              </Popover>
             ) : (
               labels.map((item, index) => (
                 <>
@@ -72,14 +84,16 @@ const ListLabel = ({ cardId }: { cardId: string }) => {
                     <p className="text-white px-2 py-1 text-ellipsis whitespace-nowrap">
                       {item.name}
                     </p>
-                    <div
-                      role="button"
-                      onClick={() => onSubmit(item.id)}
-                      className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    >
-                      {" "}
-                      <XCircle className="text-base w-4 h-4" />
-                    </div>
+                    {user?.id === item.userId && (
+                      <div
+                        role="button"
+                        onClick={() => onSubmit(item.id)}
+                        className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      >
+                        {" "}
+                        <XCircle className="text-base w-4 h-4" />
+                      </div>
+                    )}
                   </div>
                 </>
               ))

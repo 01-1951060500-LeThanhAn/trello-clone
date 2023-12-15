@@ -20,6 +20,33 @@ body,
 ::-webkit-scrollbar-track {
   width: 2px;
 }
+/* 
+.scrolly {
+  height: 80vh;
+  line-height: 0;
+  overflow-y: scroll;
+}
+
+.scrolly::-webkit-scrollbar-thumb {
+  background-size: auto 0;
+  background-position: center;
+}
+
+.scrolly::-webkit-scrollbar {
+  width: 0;
+} */
+
+/* .scrolly::-webkit-scrollbar-track {
+  background: linear-gradient(
+    to right,
+    transparent 0,
+    transparent 45%,
+    #222 45%,
+    #222 55%,
+    transparent 55%,
+    transparent 100%
+  );
+} */
 
 @layer base {
   :root {

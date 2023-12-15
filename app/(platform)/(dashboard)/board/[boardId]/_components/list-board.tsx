@@ -10,7 +10,6 @@ import { updateOrder } from "@/actions/card/update-card/main";
 import { toast } from "sonner";
 import { updateOrderCard } from "@/actions/card/update-card-order/main";
 import { Card } from "@prisma/client";
-
 interface ListBoardProps {
   boardId: string;
   data: ListCards[];
@@ -135,7 +134,8 @@ const ListBoards: React.FC<ListBoardProps> = ({ boardId, data }) => {
             <ol
               {...provided.droppableProps}
               ref={provided.innerRef}
-              className="grid overflow-x-hidden grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 gap-x-3 h-full "
+              className="flex scrollbar-hide gap-x-5 overflow-x-auto scroll-smooth whitespace-nowrap"
+              // className="grid overflow-x-hidden grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 gap-x-3 h-full "
             >
               {orderData.map((data, index) => (
                 <ListItem key={data?.id} index={index} data={data} />
