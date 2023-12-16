@@ -13,11 +13,9 @@ import { ListCards } from "@/types";
 const ListHeader = ({
   data,
   onAddCard,
-  onSort,
 }: {
   data: ListCards;
   onAddCard: () => void;
-  onSort: () => void;
 }) => {
   const [title, setTitle] = useState(data.title);
   const { formRef, isEditing, inputRef, enableEditing, disableEditing } =
@@ -88,7 +86,7 @@ const ListHeader = ({
             {title}
           </div>
         )}
-        <OptionList onSort={onSort} onAddCard={onAddCard} data={data} />
+        <OptionList onAddCard={onAddCard} data={data} />
       </div>
     </>
   );
