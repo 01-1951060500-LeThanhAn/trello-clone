@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { useAction } from "@/hooks/use-actions";
 import { ListCards } from "@/types";
 import { useUser } from "@clerk/nextjs";
+import { Card } from "@prisma/client";
 import { MoreHorizontal, X } from "lucide-react";
 import React, { ElementRef, useRef } from "react";
 import { toast } from "sonner";
@@ -19,8 +20,9 @@ import { toast } from "sonner";
 interface OptionListProps {
   data: ListCards;
   onAddCard: () => void;
+  onSort: () => void;
 }
-const OptionList: React.FC<OptionListProps> = ({ data }) => {
+const OptionList: React.FC<OptionListProps> = ({ data, onSort }) => {
   const { user } = useUser();
   const closeRef = useRef<ElementRef<"button">>(null);
   const { execute: deleteExcute } = useAction(deleteBoardList, {
@@ -73,6 +75,17 @@ const OptionList: React.FC<OptionListProps> = ({ data }) => {
               className="rounded-sm w-full text-sm font-normal mt-1 h-auto px-5 p-2 justify-start"
             >
               Copy list...
+            </FormSubmits>
+          </form>
+
+          <form action={onSort}>
+            <input hidden name="id" id="id" value={data.id} />
+            <input hidden name="boardId" id="boardId" value={data.boardId} />
+            <FormSubmits
+              variant="ghost"
+              className="rounded-sm w-full text-sm font-normal mt-1 h-auto px-5 p-2 justify-start"
+            >
+              Sorted By Time created
             </FormSubmits>
           </form>
 

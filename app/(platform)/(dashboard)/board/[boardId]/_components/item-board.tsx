@@ -1,11 +1,12 @@
 "use client";
 import { LabelList, ListCards } from "@/types";
-import React, { ElementRef, useRef } from "react";
+import React, { ElementRef, useRef, useState } from "react";
 import ListHeader from "./header-board";
 import useFunc from "@/hooks/useFunc";
 import { CardForm } from "./card-form";
 import CardItem from "./item-card";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
+import { Card } from "@prisma/client";
 interface ItemBoardProps {
   data: ListCards;
   index: number;
@@ -14,6 +15,14 @@ interface ItemBoardProps {
 const ListItem: React.FC<ItemBoardProps> = ({ data, index }) => {
   const textAreaRef = useRef<ElementRef<"textarea">>(null);
   const { isEditing, disableEditing, enableTextAreaEditing } = useFunc();
+  const [sortedCards, setSortedCards] = useState<Card[]>(data.cards || []);
+
+  const onSort = () => {
+    const sorted = [...data.cards].sort((a: Card, b: Card) => {
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    });
+    setSortedCards(sorted);
+  };
 
   return (
     <>
@@ -28,7 +37,11 @@ const ListItem: React.FC<ItemBoardProps> = ({ data, index }) => {
               {...provided.dragHandleProps}
               className="w-72  rounded-md  bg-[#f1f2f4] shadow-md px-2 py-2"
             >
-              <ListHeader onAddCard={enableTextAreaEditing} data={data} />
+              <ListHeader
+                onSort={onSort}
+                onAddCard={enableTextAreaEditing}
+                data={data}
+              />
               <Droppable droppableId={data.id} type="card">
                 {(provided) => (
                   <ol
@@ -38,13 +51,21 @@ const ListItem: React.FC<ItemBoardProps> = ({ data, index }) => {
                       data.cards?.length > 0 ? "mt-2" : "mt-0"
                     }`}
                   >
-                    {data.cards.map((card, index: number) => (
-                      <CardItem
-                        index={index}
-                        card={card as LabelList}
-                        key={card?.id}
-                      />
-                    ))}
+                    {sortedCards
+                      ? sortedCards?.map((card, index: number) => (
+                          <CardItem
+                            index={index}
+                            card={card as LabelList}
+                            key={card?.id}
+                          />
+                        ))
+                      : data.cards.map((card, index: number) => (
+                          <CardItem
+                            index={index}
+                            card={card as LabelList}
+                            key={card?.id}
+                          />
+                        ))}
                     {provided.placeholder}
                   </ol>
                 )}
