@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 
 export default async function getAllLabel(cardId: string) {
   try {
-    const labels = await db.card.findUnique({
+    const labels = await db.card.findMany({
       where: {
         id: cardId,
       },

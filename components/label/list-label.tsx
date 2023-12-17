@@ -20,7 +20,7 @@ const ListLabel = ({ cardId }: { cardId: string }) => {
     onSuccess: (data) => {
       toast.success(`Deleted label "${data?.name}" from card`);
     },
-    onError: (err) => {
+    onError: () => {
       toast.error("Delete failed label");
     },
   });

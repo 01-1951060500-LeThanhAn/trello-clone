@@ -18,7 +18,7 @@ const listColor: ColorProps[] = [
   },
   {
     id: 2,
-    color: "#b2890f",
+    color: "#55b6ef",
   },
   {
     id: 3,

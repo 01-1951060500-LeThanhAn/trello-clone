@@ -75,6 +75,19 @@ model Card {
   @@index([listId])
 }
 
+model Label {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  userId    String
+  color     String
+  card      Card     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  cardId    String   @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([cardId])
+}
+
 model Attachment {
   id     String  @id @default(auto()) @map("_id") @db.ObjectId
   cardId String  @db.ObjectId
@@ -85,19 +98,6 @@ model Attachment {
 
   userId    String
   username  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([cardId])
-}
-
-model Label {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  userId    String
-  color     String
-  card      Card     @relation(fields: [cardId], references: [id], onDelete: Cascade)
-  cardId    String   @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

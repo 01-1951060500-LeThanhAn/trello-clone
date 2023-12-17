@@ -3,7 +3,6 @@ import { createAttachment } from "@/actions/attach/add-file/main";
 import { useAction } from "@/hooks/use-actions";
 import useFunc from "@/hooks/useFunc";
 import { NextPage } from "next";
-import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { FormSubmits } from "./form-submit";
