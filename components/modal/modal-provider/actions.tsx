@@ -1,6 +1,7 @@
 "use client";
 import { copyCards } from "@/actions/card-copy/main";
 import { deleteCards } from "@/actions/delete-card/main";
+import FormAttachMent from "@/components/forms/form-attachment";
 import FormLabel from "@/components/forms/form-label";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +13,7 @@ import { useAction } from "@/hooks/use-actions";
 import { useModelCard } from "@/hooks/useModelCard";
 import { CardLists } from "@/types";
 import { useUser } from "@clerk/nextjs";
-import { Copy, EyeIcon, Trash, User2Icon } from "lucide-react";
+import { Copy, EyeIcon, Paperclip, Trash, User2Icon } from "lucide-react";
 import { useParams } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
@@ -96,10 +97,22 @@ const Actions: React.FC<ActionProps> = ({ data }) => {
               <FormLabel cardId={data.id} />
             </PopoverContent>
           </Popover>
-          <Button className="md:mt-2" variant={"primary"}>
-            <User2Icon className="w-4 h-4" size="sm" />
-            <p className="ml-2">Members</p>
-          </Button>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button className="md:mt-2" variant={"primary"}>
+                <Paperclip className="w-4 h-4" size="sm" />
+                <p className="ml-2">Attach File</p>
+              </Button>
+            </PopoverTrigger>
+
+            <PopoverContent>
+              <FormAttachMent
+                cardId={data.id}
+                userId={user?.id as string}
+                username={user?.fullName as string}
+              />
+            </PopoverContent>
+          </Popover>
 
           {data.userId === user?.id && (
             <Button

@@ -57,21 +57,38 @@ model List {
 }
 
 model Card {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   type        String?
   userId      String
   order       Int
-  image       String?   @db.String
-  description String?   @db.String
+  image       String?      @db.String
+  description String?      @db.String
   comments    Comment[]
-  listId      String    @db.ObjectId
-  list        List      @relation(fields: [listId], references: [id], onDelete: Cascade)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  listId      String       @db.ObjectId
+  list        List         @relation(fields: [listId], references: [id], onDelete: Cascade)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   labels      Label[]
+  attachments Attachment[]
 
   @@index([listId])
+}
+
+model Attachment {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  cardId String  @db.ObjectId
+  card   Card    @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  file   String?
+
+  category String?
+
+  userId    String
+  username  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([cardId])
 }
 
 model Label {

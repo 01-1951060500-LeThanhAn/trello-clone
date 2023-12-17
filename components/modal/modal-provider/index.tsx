@@ -83,6 +83,9 @@ const CardModal = () => {
                 <div className="w-full md:ml-3 ml-0">
                   <Skeleton className=" h-12 " />
                 </div>
+                <div className="w-full md:ml-3 ml-0">
+                  <Skeleton className=" h-12 " />
+                </div>
               </div>
             ) : (
               <Actions data={cardData as CardLists} />
