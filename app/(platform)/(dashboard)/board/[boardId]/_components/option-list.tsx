@@ -95,7 +95,7 @@ const OptionList: React.FC<OptionListProps> = ({ data }) => {
           </form>
 
           <Separator className="mt-2" />
-          {data.cards?.length > 0 && data.cards[0].userId === user?.id && (
+          {data.cards?.map((item) => item.userId === user?.id) && (
             <form action={onSubmit}>
               <input hidden name="id" id="id" value={data.id} />
               <input hidden name="boardId" id="boardId" value={data.boardId} />
