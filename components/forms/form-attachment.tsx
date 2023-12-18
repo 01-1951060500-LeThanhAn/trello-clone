@@ -6,6 +6,7 @@ import { NextPage } from "next";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { FormSubmits } from "./form-submit";
+import axios from "axios";
 
 interface AttachProps {
   cardId: string;
@@ -39,10 +40,17 @@ const FormAttachMent: NextPage<AttachProps> = ({
     setFile(files);
   };
 
-  const onAddFile = async (formData: FormData) => {
-    const files = formData.get("file") as any | File;
+  const onAddFile = async () => {
+    const formDatas = new FormData() as any;
+    formDatas.append("file", file);
+    formDatas.append("upload_preset", "videos");
+    formDatas.append("cloud_name", "dkw090gsn");
+    const res = await axios.post(
+      `https://api.cloudinary.com/v1_1/dkw090gsn/image/upload`,
+      formDatas
+    );
 
-    await exeInsertFile({ file: files, cardId, userId, username });
+    await exeInsertFile({ file: res.data?.url, cardId, userId, username });
   };
 
   return (

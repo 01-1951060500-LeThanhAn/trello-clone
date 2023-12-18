@@ -34,7 +34,7 @@ const OptionsBoard: React.FC<OptionsBoardProp> = ({ id, data }) => {
     <>
       <Popover>
         <PopoverTrigger asChild>
-          <Button className="h-auto w-auto p-2" variant="ghost">
+          <Button className="h-auto w-auto p-2 ml-2" variant="ghost">
             <MoreHorizontal className="h-6 w-6" />
           </Button>
         </PopoverTrigger>
