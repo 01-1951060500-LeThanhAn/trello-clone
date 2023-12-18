@@ -1,5 +1,6 @@
 "use client";
 import { deleteBoardList } from "@/actions/delete-listboard/main";
+import { copyList } from "@/actions/list-copy/main";
 import { FormSubmits } from "@/components/forms/form-submit";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,11 +34,28 @@ const OptionList: React.FC<OptionListProps> = ({ data }) => {
     },
   });
 
+  const { execute: executeCopy } = useAction(copyList, {
+    onSuccess: (data) => {
+      toast.success(`List "${data.title}" copied`);
+      closeRef.current?.click();
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
   const onSubmit = (formData: FormData) => {
     const id = formData.get("id") as string;
     const boardId = formData.get("boardId") as string;
 
     deleteExcute({ id, boardId });
+  };
+
+  const onCopy = (formData: FormData) => {
+    const id = formData.get("id") as string;
+    const boardId = formData.get("boardId") as string;
+
+    executeCopy({ id, boardId });
   };
 
   return (
@@ -65,7 +83,7 @@ const OptionList: React.FC<OptionListProps> = ({ data }) => {
           >
             Add Card
           </Button>
-          <form>
+          <form action={onCopy}>
             <input hidden name="id" id="id" value={data.id} />
             <input hidden name="boardId" id="boardId" value={data.boardId} />
             <FormSubmits

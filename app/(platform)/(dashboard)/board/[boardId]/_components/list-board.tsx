@@ -60,7 +60,7 @@ const ListBoards: React.FC<ListBoardProps> = ({ boardId, data }) => {
 
       setOrderData(items);
 
-      executeUpdateOrder({ boardId, items } as any);
+      executeUpdateOrder({ items, boardId } as any);
     }
 
     if (type === "card") {
@@ -138,7 +138,7 @@ const ListBoards: React.FC<ListBoardProps> = ({ boardId, data }) => {
               // className="grid overflow-x-hidden grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 gap-x-3 h-full "
             >
               {orderData.map((data, index) => (
-                <ListItem key={data?.id} index={index} data={data} />
+                <ListItem key={data.id} index={index} data={data} />
               ))}
               {provided.placeholder}
               <FormList />

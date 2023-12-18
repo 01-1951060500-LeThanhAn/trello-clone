@@ -2,13 +2,14 @@
 import { useModelCard } from "@/hooks/useModelCard";
 import { Draggable } from "@hello-pangea/dnd";
 import React, { useEffect, useState } from "react";
-import { CommentList, LabelList } from "@/types";
+import { LabelList } from "@/types";
 import Image from "next/image";
 import getAllLabel from "@/components/label/card-label";
 import { Skeleton } from "@/components/ui/skeleton";
 import formatTime from "@/constant/formatTime";
-import { Activity, Clock11, MessageSquareIcon } from "lucide-react";
+import { Activity, Clock11, MessageSquareIcon, User2 } from "lucide-react";
 import getCountComment from "@/components/comments/get-count-comment";
+import { useOrganization } from "@clerk/nextjs";
 interface CardItemProps {
   index: number;
   card: LabelList;
@@ -16,6 +17,8 @@ interface CardItemProps {
 
 const CardItem: React.FC<CardItemProps> = ({ index, card }) => {
   const cardModal = useModelCard();
+  const { organization } = useOrganization();
+
   const [cards, setCards] = useState<LabelList[]>([]);
   const [count, setCount] = useState<number>(0);
   const [loading, setLoading] = useState(false);
@@ -98,9 +101,9 @@ const CardItem: React.FC<CardItemProps> = ({ index, card }) => {
             <div className="">
               {card?.image ? (
                 <Image
-                  className="w-full mt-2 h-36 object-contain"
+                  className="w-full mt-2 h-40 object-cover"
                   src={card?.image}
-                  width={40}
+                  width={100}
                   height={40}
                   alt=""
                   unoptimized
@@ -121,7 +124,11 @@ const CardItem: React.FC<CardItemProps> = ({ index, card }) => {
                 </div>
                 <div className="flex items-center text-neutral-400">
                   <MessageSquareIcon className="w-4 h-4" />
-                  <p className="ml-1">{count}</p>
+                  <p className="mx-1">{count}</p>
+                </div>
+                <div className="flex items-center ml-1 text-neutral-400">
+                  <User2 className="w-4 h-4" />
+                  <p className="">{organization?.membersCount}</p>
                 </div>
               </div>
             </div>

@@ -64,7 +64,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
               title: card.title,
               description: card.description,
               order: card.order,
-              userId: userId,
+              userId,
             })),
           },
         },
@@ -93,4 +93,4 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   };
 };
 
-export const copyBoardList = createSafeAction(CopyList, handler);
+export const copyList = createSafeAction(CopyList, handler);
