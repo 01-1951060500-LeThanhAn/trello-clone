@@ -12,19 +12,23 @@ interface AttachProps {
   cardId: string;
   userId: string;
   username: string;
+  show: string;
+  setShow: (show: string) => void;
 }
 
 const FormAttachMent: NextPage<AttachProps> = ({
   cardId,
   username,
   userId,
+  show,
+  setShow,
 }) => {
   const { formRef, disableEditing } = useFunc();
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<any | null>(null);
 
   const { execute: exeInsertFile } = useAction(createAttachment, {
     onSuccess: (data) => {
-      toast.success(`Insert file "${data.file}" success`);
+      toast.success(`Insert file  success`);
       console.log("Upload success");
       disableEditing();
       setFile(null);
@@ -40,17 +44,30 @@ const FormAttachMent: NextPage<AttachProps> = ({
     setFile(files);
   };
 
-  const onAddFile = async () => {
-    const formDatas = new FormData() as any;
-    formDatas.append("file", file);
-    formDatas.append("upload_preset", "videos");
-    formDatas.append("cloud_name", "dkw090gsn");
-    const res = await axios.post(
-      `https://api.cloudinary.com/v1_1/dkw090gsn/image/upload`,
-      formDatas
-    );
+  const onAddFile = async (formData: FormData) => {
+    try {
+      const cardId = formData.get("cardId") as string;
+      let results:
+        | FormData
+        | any
+        | { username: string; cardId: string; boardId: string; file?: any } = {
+        username,
+        cardId,
+        file,
+      };
+      const formDatas = new FormData() as any;
+      formDatas.append("file", file);
 
-    await exeInsertFile({ file: res.data?.url, cardId, userId, username });
+      const res = await axios.post(
+        `https://trello-qlnm.onrender.com/upload-file`,
+        formDatas
+      );
+      console.log(res.data);
+      setShow(results.cardId);
+      exeInsertFile({ ...results, file: res.data?.pdf });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -76,10 +93,11 @@ const FormAttachMent: NextPage<AttachProps> = ({
             type="file"
             id="file"
             hidden
-            accept="*"
+            accept="application/pdf"
+            required
           />
-
-          {file && file.name && <div className="mt-4">{file.name}</div>}
+          <input hidden id="cardId" name="cardId" value={cardId} />
+          {file && <div className="mt-4">{file.name}</div>}
 
           <div className="mt-6 -mb-4">
             {" "}
@@ -87,6 +105,7 @@ const FormAttachMent: NextPage<AttachProps> = ({
           </div>
         </form>
       </div>
+      .
     </>
   );
 };

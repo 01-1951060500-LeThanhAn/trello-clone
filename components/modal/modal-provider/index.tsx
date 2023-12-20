@@ -16,8 +16,10 @@ import FormComment from "./comment";
 import CommentList from "@/components/comments/list-comment";
 import Skeleton from "react-loading-skeleton";
 import ListLabel from "@/components/label/list-label";
+import ListAttachFile from "@/components/attachfile/list-file";
 
 const CardModal = () => {
+  const [show, setShow] = useState<string>("");
   const { isOpen, onClose, id } = useModelCard();
   const [comments, setComments] = useState<any[]>([]);
   const { data: cardData } = useQuery<CardLists>({
@@ -45,6 +47,14 @@ const CardModal = () => {
 
           <div className="w-full">
             <ListLabel cardId={cardData?.id as string} />
+          </div>
+
+          <div>
+            <ListAttachFile
+              cardId={cardData?.id as string}
+              show={show}
+              setShow={setShow}
+            />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 mg:gap-4">
             <div className="col-span-3">
@@ -88,7 +98,11 @@ const CardModal = () => {
                 </div>
               </div>
             ) : (
-              <Actions data={cardData as CardLists} />
+              <Actions
+                show={show}
+                setShow={setShow}
+                data={cardData as CardLists}
+              />
             )}
           </div>
           <p className="font-semibold">Comments</p>

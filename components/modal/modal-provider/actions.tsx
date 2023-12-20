@@ -13,15 +13,17 @@ import { useAction } from "@/hooks/use-actions";
 import { useModelCard } from "@/hooks/useModelCard";
 import { CardLists } from "@/types";
 import { useUser } from "@clerk/nextjs";
-import { Copy, EyeIcon, Paperclip, Trash, User2Icon } from "lucide-react";
+import { Copy, EyeIcon, Paperclip, Trash } from "lucide-react";
 import { useParams } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 interface ActionProps {
   data: CardLists;
+  show: string;
+  setShow: (show: string) => void;
 }
 
-const Actions: React.FC<ActionProps> = ({ data }) => {
+const Actions: React.FC<ActionProps> = ({ data, show, setShow }) => {
   const { user } = useUser();
 
   const params = useParams();
@@ -107,6 +109,8 @@ const Actions: React.FC<ActionProps> = ({ data }) => {
 
             <PopoverContent>
               <FormAttachMent
+                show={show}
+                setShow={setShow}
                 cardId={data.id}
                 userId={user?.id as string}
                 username={user?.fullName as string}
