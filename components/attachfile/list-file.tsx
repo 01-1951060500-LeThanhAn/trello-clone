@@ -51,7 +51,7 @@ const ListAttachFile: NextPage<AttachProps> = ({ show, setShow, cardId }) => {
             cardId &&
             files &&
             files.map((file) => (
-              <div className="flex items-centers">
+              <div key={file.id} className="flex items-centers">
                 <div>
                   <Image
                     className="w-8 h-8 object-contain mt-2"
