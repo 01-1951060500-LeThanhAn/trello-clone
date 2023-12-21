@@ -6,6 +6,7 @@ module.exports = {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
+    "node_modules/flowbite-react/lib/esm/**/*.js",
   ],
   theme: {
     container: {
@@ -72,5 +73,8 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar-hide")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwind-scrollbar-hide", require("flowbite/plugin")),
+  ],
 };

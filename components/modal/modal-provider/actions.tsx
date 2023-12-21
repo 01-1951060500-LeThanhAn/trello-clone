@@ -1,6 +1,7 @@
 "use client";
 import { copyCards } from "@/actions/card-copy/main";
 import { deleteCards } from "@/actions/delete-card/main";
+import DateTime from "@/components/date/date-time";
 import FormAttachMent from "@/components/forms/form-attachment";
 import FormLabel from "@/components/forms/form-label";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,7 @@ import { useAction } from "@/hooks/use-actions";
 import { useModelCard } from "@/hooks/useModelCard";
 import { CardLists } from "@/types";
 import { useUser } from "@clerk/nextjs";
-import { Copy, EyeIcon, Paperclip, Trash } from "lucide-react";
+import { Calendar, Copy, EyeIcon, Paperclip, Trash } from "lucide-react";
 import { useParams } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
@@ -32,7 +33,7 @@ const Actions: React.FC<ActionProps> = ({ data, show, setShow }) => {
     copyCards,
     {
       onSuccess: (data) => {
-        toast.success(`Copied ${data.title} success `);
+        toast.success(`Copied "${data.title}" success `);
         onClose();
       },
       onError: (err) => {
@@ -45,7 +46,7 @@ const Actions: React.FC<ActionProps> = ({ data, show, setShow }) => {
     deleteCards,
     {
       onSuccess: (data) => {
-        toast.success(`Delete ${data.title} success `);
+        toast.success(`Delete "${data.title}" success `);
         onClose();
       },
       onError: (err) => {
@@ -78,6 +79,18 @@ const Actions: React.FC<ActionProps> = ({ data, show, setShow }) => {
         <p className="text-base font-semibold">Actions</p>
 
         <div className=" grid grid-cols-2  md:flex md:flex-col gap-x-3 gap-y-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button className="md:mt-2" variant={"primary"}>
+                <Calendar className="w-4 h-4" size="sm" />
+                <p className="ml-2">Date</p>
+              </Button>
+            </PopoverTrigger>
+
+            <PopoverContent>
+              <DateTime />
+            </PopoverContent>
+          </Popover>
           <Button
             disabled={isLoadingCopy}
             onClick={onCopy}
@@ -99,6 +112,7 @@ const Actions: React.FC<ActionProps> = ({ data, show, setShow }) => {
               <FormLabel cardId={data.id} />
             </PopoverContent>
           </Popover>
+
           <Popover>
             <PopoverTrigger asChild>
               <Button className="md:mt-2" variant={"primary"}>
