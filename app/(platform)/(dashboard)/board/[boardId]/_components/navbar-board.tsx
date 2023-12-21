@@ -5,7 +5,7 @@ import BoardTitleForm from "./title-board";
 import OptionsBoard from "./options-board";
 import { addBoardHistory } from "@/constant/history";
 import { notFound } from "next/navigation";
-import { ListFilter, StarIcon, User } from "lucide-react";
+import { ListFilter, Plus, StarIcon, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -92,7 +92,8 @@ const BoardNavbar: NextPage<BoardNavProps> = ({ board, orgId }) => {
         </div>
         <div className="ml-auto flex items-center">
           <Button variant="outline" className="text-neutral-600 mr-3">
-            Share
+            <Plus className="w-4 h-4 mr-2" />
+            Invite
           </Button>
 
           <Popover>

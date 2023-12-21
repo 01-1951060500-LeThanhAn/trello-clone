@@ -2,6 +2,7 @@
 import { createComments } from "@/actions/comments/add-comment/main";
 import getAllComments from "@/components/comments/get-comment";
 import { FormInputs } from "@/components/forms/form-input";
+import { FormSubmits } from "@/components/forms/form-submit";
 import { useAction } from "@/hooks/use-actions";
 import { useUser } from "@clerk/nextjs";
 import { SendIcon } from "lucide-react";
@@ -73,11 +74,12 @@ const FormComment = ({
             errors={fieldErrors}
           />
 
-          <SendIcon
-            className="absolute top-2 right-2"
-            role="button"
-            type="submit"
-          />
+          <FormSubmits
+            variant="ghost"
+            className="absolute bg-white top-0 right-0"
+          >
+            <SendIcon className="" role="button" type="submit" />
+          </FormSubmits>
         </form>
       </div>
     </>

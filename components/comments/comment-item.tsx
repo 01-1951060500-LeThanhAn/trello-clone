@@ -1,7 +1,7 @@
 "use client";
 import { CommentProps } from "@/interface";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { useAction } from "@/hooks/use-actions";
 import { deleteComment } from "@/actions/comments/delete-comment/main";
@@ -9,6 +9,13 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import useFunc from "@/hooks/useFunc";
 import { useUser } from "@clerk/nextjs";
+import { FormInputs } from "../forms/form-input";
+import { replyComments } from "@/actions/comments/reply-comment/main";
+import { FormSubmits } from "../forms/form-submit";
+import { SendIcon } from "lucide-react";
+import { ReplyComment } from "@prisma/client";
+import ListReplyComment from "./list-reply-comment";
+import getReplyComments from "./get-reply-comment";
 interface ItemCommentProps {
   item: CommentProps;
   cardId: string | undefined;
@@ -24,7 +31,12 @@ const CommentItem: React.FC<ItemCommentProps> = ({
 }) => {
   const { user } = useUser();
 
-  const { disableEditing, isEditing } = useFunc();
+  if (!user) {
+    return null;
+  }
+  const [repliesComment, setRepliesComment] = useState<ReplyComment[]>([]);
+  const [show, setShow] = useState(false);
+  const { disableEditing, enableEditing, isEditing } = useFunc();
   const { execute: exeDeleteComment } = useAction(deleteComment, {
     onSuccess: () => {
       toast.success(`Deleted ${item.content} success`);
@@ -37,9 +49,39 @@ const CommentItem: React.FC<ItemCommentProps> = ({
     },
   });
 
+  const { execute: exeReplyComment, fieldErrors } = useAction(replyComments, {
+    onSuccess: async () => {
+      toast.success(`Replied comment successfully`);
+
+      try {
+        const allComments = await getReplyComments(item.id);
+        setRepliesComment(allComments);
+      } catch (error: any) {
+        toast.error(error);
+      }
+    },
+    onError: (err) => {
+      toast.error(err);
+    },
+  });
+
   const onDeleteComment = () => {
     exeDeleteComment({ id: item.id, cardId: cardId as any });
   };
+
+  const onReplyComment = (formData: FormData) => {
+    const content = formData.get(`content`) as string;
+
+    exeReplyComment({
+      content,
+      commentId: item.id as string,
+      imageUrl: user.imageUrl,
+      fullName: user?.fullName ? user.fullName : "",
+    });
+
+    setShow(false);
+  };
+
   return (
     <>
       <div className="flex my-2">
@@ -73,6 +115,7 @@ const CommentItem: React.FC<ItemCommentProps> = ({
               Like
             </Button>
             <Button
+              onClick={() => setShow(!show)}
               className="text-xs hover:bg-transparent   bg-transparent text-black"
               role="button"
             >
@@ -91,6 +134,42 @@ const CommentItem: React.FC<ItemCommentProps> = ({
           </div>
         </div>
       </div>
+
+      <ListReplyComment
+        commentId={item.id}
+        repliesComment={repliesComment}
+        setRepliesComment={setRepliesComment}
+      />
+
+      {show && (
+        <div className="flex items-center ml-8">
+          <div className="w-[13%] xl:pl-9">
+            <Image
+              src={user?.imageUrl ? user.imageUrl : ""}
+              alt=""
+              className="w-8 h-8 object-cover rounded-full"
+              width={30}
+              height={30}
+            />
+          </div>
+          <form action={onReplyComment} className="w-full relative">
+            <FormInputs
+              className=" w-[100%] h-10 py-4 flex-grow" // Sử dụng flex-grow để input chiếm hết phần còn lại
+              type="text"
+              placeholder="Reply a comment..."
+              id="content"
+              errors={fieldErrors}
+            />
+
+            <FormSubmits
+              variant="ghost"
+              className="absolute bg-transparent top-0 right-0"
+            >
+              <SendIcon className="" role="button" type="submit" />
+            </FormSubmits>
+          </form>
+        </div>
+      )}
     </>
   );
 };

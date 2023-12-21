@@ -112,12 +112,28 @@ model Comment {
 
   fullName  String
   userId    String
-  cardId    String   @db.ObjectId
-  card      Card     @relation(fields: [cardId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  cardId    String         @db.ObjectId
+  card      Card           @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @default(now())
+  replies   ReplyComment[]
 
   @@index([cardId])
+}
+
+model ReplyComment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  order     Int
+  imageUrl  String
+  fullName  String
+  userId    String
+  commentId String   @db.ObjectId
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([commentId])
 }
 
 enum ACTION {

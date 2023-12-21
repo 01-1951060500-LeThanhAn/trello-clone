@@ -32,6 +32,9 @@ const ListAttachFile: NextPage<AttachProps> = ({ show, setShow, cardId }) => {
       setFiles(res.data.data);
     };
 
+    // console.log(cardId);
+    // console.log(show);
+
     getAllFile();
   }, []);
 
@@ -49,6 +52,7 @@ const ListAttachFile: NextPage<AttachProps> = ({ show, setShow, cardId }) => {
         <>
           {show === cardId &&
             cardId &&
+            show &&
             files &&
             files.map((file) => (
               <div key={file.id} className="flex items-centers">
